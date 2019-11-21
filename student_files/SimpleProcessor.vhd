@@ -173,11 +173,238 @@ begin
 	-- Connect processor components below
 	
 	-- Register file
-	rf: RegisterFile8by16Bit
-		
+	RF: RegisterFile8by16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			RF_write => RF_write,
+			AddressA => Data_IR(15 downto 13),
+			AddressB => Data_IR(12 downto 10),
+			AddressC => Data_MuxC,
+			InputC => Data_RY,
+			OutputA => Data_RFOutA,
+			OutputB => Data_RFOutB,
+			debug_r1 => debug_r1,
+			debug_r2 => debug_r2,
+			debug_r3 => debug_r3,
+			debug_r4 => debug_r4,
+			debug_r5 => debug_r5,
+			debug_r6 => debug_r6,
+			debug_r7 => debug_r7
+		);
 
+	-- Inputs for Register File
+	RY: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => '1',
+			D => Data_MuxY,
+			Q => Data_RY
+		);
 	
+	MuxC: Mux4Input3Bit
+		port map (
+			s => C_select,
+			input0 => Data_IR(12 downto 10),
+			input1 => Data_IR(9 downto 7),
+			input2 => "111",
+			input3 => '0',
+			result => Data_MuxC
+		);
+
+	IR: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => IR_Enable,
+			D => Data_from_Mem,
+			Q => Data_IR
+		);
+
+	-- Output for Register File and Inputs for ALU
+	RA: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => '1',
+			D => Data_RFOutA,
+			Q => Data_RA
+		);
+
+	RB: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => '1',
+			D => Data_RFOutB,
+			Q => Data_RB
+		);
+
+	-- This is input for the ALU
+	MuxB: Mux2Input16Bit
+		port map (
+			s => B_select,
+			input0 => Data_RB,
+			input1 => Data_Extension,
+			result => Data_MuxB
+		);
 	
+	-- ALU
+	ALU: ALU
+		port map (
+			ALU_op => ALU_op,
+			A => Data_RA,
+			B => Data_MuxB,
+			A_inv => A_inv,
+			B_inv => B_inv,
+			C_in => C_in,
+			ALU_out => Data_ALU,
+			N => N,
+			C => C,
+			V => V,
+			Z => Z
+		);
+
+	-- Out from the ALU
+	RZ: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => '1',
+			D => Data_ALU,
+			Q => Data_RZ
+		);
+
+	-- This is also output from RB
+	RM: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => '1',
+			D => Data_RFOutB,
+			Q => Data_to_Mem
+		);
 	
+	-- Output from RZ, Mem, and PC
+	MuxY: Mux4Input16Bit
+		port map (
+			s => Y_select,
+			input0 => Data_RZ,
+			input1 => Data_from_Mem,
+			input2 => Data_PC_temp,
+			input3 => '0',
+			result => Data_MuxY
+		);
+
+	-- Status and Control unit
+	-- Status get data from ALU
+	Status: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => Status_enable,
+			D(0) => Z,
+			D(1) => V,
+			D(2) => C,
+			D(3) => N,
+			D(15 downto 4) => "000000000000",
+			Q => Data_Status
+		);
+
+	-- Control Unit gets input from IR and outputs control signals
+	CU: ControlUnit
+		port map (
+			clock => clock,
+			reset => reset,
+			status => Data_Status,
+			MFC => MFC,
+			IR => Data_IR,
+			RF_write => RF_write,
+			C_select => C_select,
+			B_select => B_select,
+			Y_select => Y_select,
+			ALU_op => ALU_op,
+			A_inv => A_inv,
+			B_inv => B_inv,
+			C_in => C_in,
+			MEM_read => MEM_read,
+			MEM_write => MEM_write,
+			MA_select => MA_select,
+			IR_enable => IR_enable,
+			PC_select => PC_select,
+			PC_enable => PC_eneable,
+			INC_select => INC_select,
+			extend => extend,
+			Status_enable => Status_enable,
+			debug_state => debug_state
+		);
+
+	-- Immediate Extender gets input from IR and PC
+	ImmExtend: Immediate
+		port map (
+			IR => Data_IR,
+			PC => Data_PC,
+			extend => extend,
+			extension => Data_Extension
+		);
 	
+	-- MuxINC feeds into an adder for MuxPC
+	MuxINC: Mux2Input16Bit
+		port map (
+			s => INC_select,
+			input0 => "0000000000000001",
+			input1 => Data_Extension,
+			result => Data_MuxInc
+		);
+
+	-- Adder gets input from PC and MuxInc and feeds into MuxPC
+	Adder: Adder16Bit
+		port map (
+			X => Data_MuxInc,
+			Y => Data_PC,
+			C_in => '0',
+			S => Data_Adder
+		);
+
+	-- MuxPC gets input from the immediate extender, the adder, and RA
+	MuxPC: Mux4Input16Bit
+		port map (
+			s => PC_select,
+			input0 => Data_RA,
+			input1 => Data_Adder,
+			input2 => Data_Extension,
+			input3 => '0',
+			result => Data_MuxPC
+		);
+
+	-- PC gets input from MuxPC and outputs to PC temp, MuxMA, the adder, and the immediate extender
+	PC: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => PC_enable,
+			D => Data_MuxPC,
+			Q => Data_PC
+		);
+
+	-- MuxMA gets input from RZ and PC and feeds into memory
+	MuxMA: Mux2Input16Bit
+		port map (
+			s => MA_select,
+			input0 => Data_RZ,
+			input1 => Data_PC,
+			result => MEM_address
+		);
+
+	-- PC temp gets input from PC and feeds into MuxY
+	PCtemp: Reg16Bit
+		port map (
+			clock => clock,
+			reset => reset,
+			enable => '1',
+			D => Data_MPC,
+			Q => Data_PC_temp
+		);
+
 end implementation;
