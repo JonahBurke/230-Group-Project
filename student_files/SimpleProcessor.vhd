@@ -209,7 +209,7 @@ begin
 			input0 => Data_IR(12 downto 10),
 			input1 => Data_IR(9 downto 7),
 			input2 => "111",
-			input3 => '0',
+			input3 => "000",
 			result => Data_MuxC
 		);
 
@@ -251,7 +251,7 @@ begin
 		);
 	
 	-- ALU
-	ALU: ALU
+	ProcessorALU: ALU
 		port map (
 			ALU_op => ALU_op,
 			A => Data_RA,
@@ -293,7 +293,7 @@ begin
 			input0 => Data_RZ,
 			input1 => Data_from_Mem,
 			input2 => Data_PC_temp,
-			input3 => '0',
+			input3 => "0000000000000000",
 			result => Data_MuxY
 		);
 
@@ -333,7 +333,7 @@ begin
 			MA_select => MA_select,
 			IR_enable => IR_enable,
 			PC_select => PC_select,
-			PC_enable => PC_eneable,
+			PC_enable => PC_enable,
 			INC_select => INC_select,
 			extend => extend,
 			Status_enable => Status_enable,
@@ -374,7 +374,7 @@ begin
 			input0 => Data_RA,
 			input1 => Data_Adder,
 			input2 => Data_Extension,
-			input3 => '0',
+			input3 => "0000000000000000",
 			result => Data_MuxPC
 		);
 
@@ -403,7 +403,7 @@ begin
 			clock => clock,
 			reset => reset,
 			enable => '1',
-			D => Data_MPC,
+			D => Data_PC,
 			Q => Data_PC_temp
 		);
 
