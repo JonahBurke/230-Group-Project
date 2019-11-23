@@ -121,6 +121,9 @@ begin
 			INC_select <= '0';
 			PC_select <= "01";
 			if MFC = '1' then
+				PC_enable <= '1';
+			else 
+				PC_enable <= '0';
 			end if;
 		end if;
 
