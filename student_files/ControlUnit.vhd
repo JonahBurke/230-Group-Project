@@ -107,11 +107,324 @@ begin
 
 		-- set output signals and WMFC for each instruction and each stage
 
+		-- All instrucgtions do the same thing in Phase 1
+		if current_state = "001" then
+			MA_select <= '1'; 
+			MEM_read <= '1';
+			MEM_write <= '0';
+			WMFC <= '1';
+			if MFC = '1' then 
+				IR_enable <= '1';
+			else 
+				IR_enable <= '0';
+			end if;
+			INC_select <= '0';
+			PC_select <= "01";
+			if MFC = '1' then
+			end if;
+		end if;
 
-
-
-
-
+		case opcode is
+			when "000" => -- R-type
+				case OPX is
+					when "0000" => -- add
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0001" => -- sub
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0010" => -- and
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0011" => -- or
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0100" => -- xor
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0101" => -- nand
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+						when "0110" => -- nor
+							if current_state = "010" then
+							
+							elsif current_state = "011" then
+								
+							elsif current_state = "100" then
+							
+							elsif current_state = "101" then
+							
+							end if;
+					when "0111" => -- xnor
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "1000" => -- cmp
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "1001" => -- jmp
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "1010" => -- callr
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "1011" => -- ret
+						if current_state = "010" then
+						
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when others => -- not sure what to do here
+				end case;
+			when "001" => -- ldw
+				if current_state = "010" then
+				
+				elsif current_state = "011" then
+					
+				elsif current_state = "100" then
+				
+				elsif current_state = "101" then
+				
+				end if;
+			when "010" => -- stw
+				if current_state = "010" then
+				
+				elsif current_state = "011" then
+					
+				elsif current_state = "100" then
+				
+				elsif current_state = "101" then
+				
+				end if;
+			when "011" => -- addi
+				if current_state = "010" then
+				
+				elsif current_state = "011" then
+					
+				elsif current_state = "100" then
+				
+				elsif current_state = "101" then
+				
+				end if;
+			when "100" => -- ori
+				if current_state = "010" then
+				
+				elsif current_state = "011" then
+					
+				elsif current_state = "100" then
+				
+				elsif current_state = "101" then
+				
+				end if;
+			when "101" => -- orhi
+				if current_state = "010" then
+				
+				elsif current_state = "011" then
+					
+				elsif current_state = "100" then
+				
+				elsif current_state = "101" then
+				
+				end if;
+			when "110" => -- B-Type
+				case OPX is
+					when "0000" => -- br
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0001" => -- beq
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0010" => -- bne
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0011" => -- bgeu
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0100" => -- bltu
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0101" => -- bgtu
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0110" => -- bbleu
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "0111" => -- bge
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "1000" => -- blt
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "1001" => -- bgt
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when "1010" => -- ble
+						if current_state = "010" then
+				
+						elsif current_state = "011" then
+							
+						elsif current_state = "100" then
+						
+						elsif current_state = "101" then
+						
+						end if;
+					when others => -- not sure what to do here
+				end case ;
+			-- opcode = "111" 
+			when others => -- call
+				if current_state = "010" then
+				
+				elsif current_state = "011" then
+					
+				elsif current_state = "100" then
+				
+				elsif current_state = "101" then
+				
+				end if;
+		end case;
 		
 	end process;
 	
