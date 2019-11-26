@@ -470,13 +470,16 @@ begin
 			-- opcode = "111" 
 			when others => -- call
 				if current_state = "010" then
-				
+					-- no action here
 				elsif current_state = "011" then
-					
+					extend <= "11";
+					PC_select <= "10";
+					PC_enable <= '1';
 				elsif current_state = "100" then
-				
+					Y_select <= "10";
 				elsif current_state = "101" then
-				
+					RF_write <= '1';
+					C_select <= "10";
 				end if;
 		end case;
 		
