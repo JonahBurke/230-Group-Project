@@ -392,116 +392,170 @@ begin
 					C_select <= "00";
 				end if;
 			when "110" => -- B-Type
+					-- for all Branch instructions, the comparaison is made and flags are set by cmp
 				case OPX is
 					when "0000" => -- br
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							extend <= "00";
+							INC_select <= '1';
+							PC_select <= "01";
+							PC_enable <= '1';
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "0001" => -- beq
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if Z = '1' then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "0010" => -- bne
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if Z = '0' then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "0011" => -- bgeu
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if C = '1' then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "0100" => -- bltu
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if C = '0' then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "0101" => -- bgtu
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if C = '1' and Z = '0' then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "0110" => -- bbleu
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if C = '0' and Z = '1' then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "0111" => -- bge
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if N = V then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "1000" => -- blt
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if N != V then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "1001" => -- bgt
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if N = V and Z = '0' then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "1010" => -- ble
 						if current_state = "010" then
-				
+							-- no action here
 						elsif current_state = "011" then
-							
+							if N != V and Z = '1' then
+								extend <= "00";
+								INC_select <= '1';
+								PC_select <= "01";
+								PC_enable <= '1';
+							end if;
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when others => -- not sure what to do here
 				end case ;
