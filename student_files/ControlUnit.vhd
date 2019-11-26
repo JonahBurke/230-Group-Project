@@ -305,53 +305,91 @@ begin
 				end case;
 			when "001" => -- ldw
 				if current_state = "010" then
-				
+					-- no action here
 				elsif current_state = "011" then
-					
+					-- basically doing addition
+					extend <= "00";
+					B_select <= '1';
+					ALU_op <= "11";
+					A_inv <= '0';
+					B_inv <= '0';
+					C_in <= '0';
 				elsif current_state = "100" then
-				
+					MA_select <= '0';
+					MEM_read <= '1';
+					MEM_write <= '0';
+					WMFC <= '1';
+					Y_select <= "01";
 				elsif current_state = "101" then
-				
+					RF_write <= '1';
+					C_select <= "00";
 				end if;
 			when "010" => -- stw
 				if current_state = "010" then
-				
+					-- no action here
 				elsif current_state = "011" then
-					
+					-- basically doing addition
+					extend <= "00";
+					B_select <= '1';
+					ALU_op <= "11";
+					A_inv <= '0';
+					B_inv <= '0';
+					C_in <= '0';
 				elsif current_state = "100" then
-				
+					MA_select <= '0';
+					MEM_read <= '0';
+					MEM_write <= '1';
+					WMFC <= '1';
 				elsif current_state = "101" then
-				
+					-- no action here
 				end if;
 			when "011" => -- addi
 				if current_state = "010" then
-				
+					-- no action here
 				elsif current_state = "011" then
-					
+					extend <= "00";
+					B_select <= '1';
+					ALU_op <= "11";
+					A_inv <= '0';
+					B_inv <= '0';
+					C_in <= '0';
 				elsif current_state = "100" then
-				
+					Y_select <= "00";
 				elsif current_state = "101" then
-				
+					RF_write <= '1';
+					C_select <= "00";
 				end if;
 			when "100" => -- ori
 				if current_state = "010" then
-				
+					-- no action here
 				elsif current_state = "011" then
-					
+					extend <= "01";
+					B_select <= '1';
+					ALU_op <= "01";
+					A_inv <= '0';
+					B_inv <= '0';
+					C_in <= '0';
 				elsif current_state = "100" then
-				
+					Y_select <= "00";
 				elsif current_state = "101" then
-				
+					RF_write <= '1';
+					C_select <= "00";
 				end if;
 			when "101" => -- orhi
 				if current_state = "010" then
-				
+					-- no action here
 				elsif current_state = "011" then
-					
+					extend <= "10";
+					B_select <= '1';
+					ALU_op <= "01";
+					A_inv <= '0';
+					B_inv <= '0';
+					C_in <= '0';
 				elsif current_state = "100" then
-				
+					Y_select <= "00";
 				elsif current_state = "101" then
-				
+					RF_write <= '1';
+					C_select <= "00";
 				end if;
 			when "110" => -- B-Type
 				case OPX is
