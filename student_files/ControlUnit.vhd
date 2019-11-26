@@ -516,7 +516,7 @@ begin
 						if (current_state = "010") then
 							-- no action here
 						elsif (current_state = "011") then
-							if (not N = V) then
+							if (N /= V) then
 								extend <= "00";
 								INC_select <= '1';
 								PC_select <= "01";
@@ -546,7 +546,7 @@ begin
 						if (current_state = "010") then
 							-- no action here
 						elsif (current_state = "011") then
-							if (not N = V and Z = '1') then
+							if (N /= V and Z = '1') then
 								extend <= "00";
 								INC_select <= '1';
 								PC_select <= "01";
