@@ -132,123 +132,174 @@ begin
 				case OPX is
 					when "0000" => -- add
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							B_select <= '0';
+							ALU_op <= "11";
+							A_inv <= '0';
+							B_inv <= '0';
+							C_in <= '0';
 						elsif current_state = "100" then
-						
+							Y_select <= "00";
 						elsif current_state = "101" then
-						
+							RF_write <= '1';
+							C_select <= "01";
 						end if;
 					when "0001" => -- sub
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							B_select <= '0';
+							ALU_op <= "11";
+							A_inv <= '0';
+							B_inv <= '1';
+							C_in <= '1';
 						elsif current_state = "100" then
-						
+							Y_select <= "00";
 						elsif current_state = "101" then
-						
+							RF_write <= '1';
+							C_select <= "01";
 						end if;
 					when "0010" => -- and
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							B_select <= '0';
+							ALU_op <= "00";
+							A_inv <= '0';
+							B_inv <= '0';
+							C_in <= '0';
 						elsif current_state = "100" then
-						
+							Y_select <= "00";
 						elsif current_state = "101" then
-						
+							RF_write <= '1';
+							C_select <= "01";
 						end if;
 					when "0011" => -- or
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							B_select <= '0';
+							ALU_op <= "01";
+							A_inv <= '0';
+							B_inv <= '0';
+							C_in <= '0';
 						elsif current_state = "100" then
-						
+							Y_select <= "00";
 						elsif current_state = "101" then
-						
+							RF_write <= '1';
+							C_select <= "01";
 						end if;
 					when "0100" => -- xor
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							B_select <= '0';
+							ALU_op <= "10";
+							A_inv <= '0';
+							B_inv <= '0';
+							C_in <= '0';
 						elsif current_state = "100" then
-						
+							Y_select <= "00";
 						elsif current_state = "101" then
-						
+							RF_write <= '1';
+							C_select <= "01";
 						end if;
 					when "0101" => -- nand
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							B_select <= '0';
+							ALU_op <= "01";
+							A_inv <= '1';
+							B_inv <= '1';
+							C_in <= '0';
 						elsif current_state = "100" then
-						
+							Y_select <= "00";
 						elsif current_state = "101" then
-						
+							RF_write <= '1';
+							C_select <= "01";
 						end if;
-						when "0110" => -- nor
-							if current_state = "010" then
-							
-							elsif current_state = "011" then
-								
-							elsif current_state = "100" then
-							
-							elsif current_state = "101" then
-							
-							end if;
+					when "0110" => -- nor
+						if current_state = "010" then
+							-- no action here
+						elsif current_state = "011" then
+							B_select <= '0';
+							ALU_op <= "00";
+							A_inv <= '1';
+							B_inv <= '1';
+							C_in <= '0';
+						elsif current_state = "100" then
+							Y_select <= "00";
+						elsif current_state = "101" then
+							RF_write <= '1';
+							C_select <= "01";
+						end if;
 					when "0111" => -- xnor
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							B_select <= '0';
+							ALU_op <= "10";
+							A_inv <= '0'; -- The value of A_inv is arbitrary
+							B_inv <= '1'; -- just has to be not A_inve
+							C_in <= '0';
 						elsif current_state = "100" then
-						
+							Y_select <= "00";
 						elsif current_state = "101" then
-						
+							RF_write <= '1';
+							C_select <= "01";
 						end if;
 					when "1000" => -- cmp
+							-- I'm not confident in this one, so we'll see how this goes
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							-- basically doing subtraction
+							B_select <= '0';
+							ALU_op <= "11";
+							A_inv <= '0';
+							B_inv <= '1';
+							C_in <= '1';
+							Status_enable <= '1';
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "1001" => -- jmp
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							PC_select <= "00";
+							PC_enable <= '1';
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when "1010" => -- callr
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							PC_select <= "00";
+							PC_enable <= '1';
 						elsif current_state = "100" then
-						
+							Y_select <= "10";
 						elsif current_state = "101" then
-						
+							RF_Write <= '1';
+							C_select <= "01";
 						end if;
 					when "1011" => -- ret
 						if current_state = "010" then
-						
+							-- no action here
 						elsif current_state = "011" then
-							
+							PC_select <= "00";
+							PC_enable <= '1';
 						elsif current_state = "100" then
-						
+							-- no action here
 						elsif current_state = "101" then
-						
+							-- no action here
 						end if;
 					when others => -- not sure what to do here
 				end case;
