@@ -398,7 +398,7 @@ begin
 						if (current_state = "010") then
 							-- no action here
 						elsif (current_state = "011") then
-							extend <= "000";
+							extend <= "011";
 							INC_select <= '1';
 							PC_select <= "01";
 							PC_enable <= '1';
@@ -412,7 +412,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (Z = '1') then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -427,7 +427,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (Z = '0') then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -442,7 +442,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (C = '1') then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -457,7 +457,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (C = '0') then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -472,7 +472,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (C = '1' and Z = '0') then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -487,7 +487,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (C = '0' and Z = '1') then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -502,7 +502,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (N = V) then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -517,7 +517,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (N /= V) then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -532,7 +532,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (N = V and Z = '0') then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -547,7 +547,7 @@ begin
 							-- no action here
 						elsif (current_state = "011") then
 							if (N /= V and Z = '1') then
-								extend <= "000";
+								extend <= "011";
 								INC_select <= '1';
 								PC_select <= "01";
 								PC_enable <= '1';
@@ -564,7 +564,7 @@ begin
 				if (current_state = "010") then
 					-- no action here
 				elsif (current_state = "011") then
-					extend <= "011";
+					extend <= "100"; -- could be anything greater than 011
 					PC_select <= "10";
 					PC_enable <= '1';
 				elsif (current_state = "100") then
